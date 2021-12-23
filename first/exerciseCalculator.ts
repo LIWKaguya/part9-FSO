@@ -60,4 +60,3 @@ console.log(exerciseCal(target, exerciseHours))
     }
     console.log(e)
 }
- //
