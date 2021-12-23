@@ -1,0 +1,19 @@
+{
+  "name": "part9-fso",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "multiplier" : "ts-node multiplier.ts",
+    "calculateBmi" : "ts-node calculateBmi.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.2",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  }
+}
