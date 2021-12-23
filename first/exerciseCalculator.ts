@@ -14,10 +14,12 @@ interface ExerValues {
 }
 
 const parseArguments = (args: Array<string>): ExerValues => {
-    if (args.length < 2) throw new Error('Not enough arguments');
+    if (args.length < 4) throw new Error('Not enough arguments');
     const exerciseHours = args.slice(3, args.length).map(n => Number(n))
     const target = Number(args[2])
-    return {target, exerciseHours}    
+    const check = exerciseHours.map(n => isNaN(n))
+    if(check.includes(false) && !isNaN(target)) return {target, exerciseHours}
+    else throw new Error("Some of arguments are not number")    
 }
 
 const exerciseCal = ( target: number, exerciseHours: Array<number>): exerciseCal => {
@@ -48,6 +50,13 @@ const exerciseCal = ( target: number, exerciseHours: Array<number>): exerciseCal
         average
     }
 }
-
+try {
 const {target, exerciseHours} = parseArguments(process.argv)
 console.log(exerciseCal(target, exerciseHours))
+} catch (error) {
+    let e = "Something bad happened. "
+    if(error instanceof Error) {
+        e += "Error: " + error.message
+    }
+    console.log(e)
+}
