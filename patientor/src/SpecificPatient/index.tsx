@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SemanticICONS, Card, Icon} from "semantic-ui-react";
 import { apiBaseUrl } from "../constants";
-import { useStateValue } from "../state";
+import { setSpecificPatient, useStateValue } from "../state";
 import { Patient, Gender } from "../types";
 
 const SpecificPatient = () => {
@@ -14,10 +14,10 @@ const SpecificPatient = () => {
     useEffect(() => {
         const fetchedPatient = async () => {
             try {
-                const { data } = await axios.get<Patient>(
+                const { data: specificPatient } = await axios.get<Patient>(
                     `${apiBaseUrl}/patients/${id}`
                 );
-                dispatch({type: "SET_SPECIFIC_PATIENT", payload: data});
+                dispatch(setSpecificPatient(specificPatient));
             } catch (err) {
                 console.log(err);
             }
