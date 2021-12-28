@@ -1,57 +1,131 @@
 import React from 'react';
+import {assertNever} from "assert-never";
+
 interface header {
   courseName: string;
 }
 
-interface coursePart {
+interface CoursePartBase {
   name: string;
   exerciseCount: number;
+  type: string;
 }
 
-const Header = (props: header) => {
-  return <h1>{props.courseName}</h1>
+interface CourseNormalPart extends CoursePartBase {
+  type: "normal";
+  description: string;
+}
+interface CourseProjectPart extends CoursePartBase {
+  type: "groupProject";
+  groupProjectCount: number;
 }
 
-const Course = (props: coursePart) => {
-  return (
-    <p>{props.name} {props.exerciseCount}</p>
-  )
+interface CourseSubmissionPart extends CoursePartBase {
+  type: "submission";
+  description: string;
+  exerciseSubmissionLink: string;
 }
 
-const Courses = ({courseParts}: {courseParts: coursePart[]}) => {
+interface CourseSpecialPart extends CoursePartBase {
+  type: "special";
+  requirements: string[];
+  description: string;
+}
+
+type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart | CourseSpecialPart;
+
+const Header = ({courseName}: header) => {
+    return (
+      <h1>{courseName}</h1>
+    )
+}
+
+const Courses = ({courseParts} : {courseParts: Array<CoursePart>}) => {
   return (
     <>
-    {courseParts.map(course => <Course key={course.name} name={course.name} exerciseCount={course.exerciseCount} /> )}
+    {courseParts.map(part => {
+      switch(part.type) {
+        case "normal" :
+          return (
+            <>
+            <p><b>{part.name} {part.exerciseCount}</b><br />
+            <em>{part.description}</em></p>
+            </>
+          )
+        case "groupProject": 
+          return (
+            <>
+            <p><b>{part.name} {part.exerciseCount}</b><br />
+            project exercises {part.groupProjectCount}</p>
+            </>
+          )
+        case "submission":
+          return (
+            <>
+            <p><b>{part.name} {part.exerciseCount}</b><br />
+            <em>{part.description}</em><br />
+            submit to {part.exerciseSubmissionLink}</p>
+            </>
+          )
+        case "special":
+          return (
+            <p><b>{part.name} {part.exerciseCount}</b><br />
+            <em>{part.description}</em><br />
+            required skills: {part.requirements.join(',')}</p>
+          )
+        default:
+          return assertNever(part);
+      }
+    })}
     </>
   )
 }
 
-const Total = ({courseParts}: {courseParts: coursePart[]}) => {
+const Total = ({courseParts} : {courseParts: Array<CoursePart>}) => {
   return (
-    <>
-    <p>Number of exercises {" "}
-    {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
+    <p>
+        Number of exercises{" "}
+        {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
     </p>
-    </>
   )
 }
 
 const App = () => {
   const courseName = 'Half Stack application development';
-  const courseParts = [
+  const courseParts: CoursePart[] = [
     {
       name: "Fundamentals",
-      exerciseCount: 10
+      exerciseCount: 10,
+      description: "This is the leisured course part",
+      type: "normal"
+    },
+    {
+      name: "Advanced",
+      exerciseCount: 7,
+      description: "This is the harded course part",
+      type: "normal"
     },
     {
       name: "Using props to pass data",
-      exerciseCount: 7
+      exerciseCount: 7,
+      groupProjectCount: 3,
+      type: "groupProject"
     },
     {
       name: "Deeper type usage",
-      exerciseCount: 14
+      exerciseCount: 14,
+      description: "Confusing description",
+      exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
+      type: "submission"
+    },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      type: "special"
     }
-  ];
+  ]
 
   return (
     <div>
