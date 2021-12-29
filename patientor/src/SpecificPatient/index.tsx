@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { SemanticICONS, Card, Icon} from "semantic-ui-react";
+import { SemanticICONS, Card, Icon, Segment} from "semantic-ui-react";
 import { apiBaseUrl } from "../constants";
 import { setSpecificPatient, useStateValue } from "../state";
 import { Patient, Gender } from "../types";
@@ -43,6 +43,7 @@ const SpecificPatient = () => {
     return (
         <>
             {patient && (
+                <>
                 <Card>
                     <Card.Content>
                         <Card.Header>
@@ -55,6 +56,20 @@ const SpecificPatient = () => {
                         </Card.Description>                    
                     </Card.Content>
                 </Card>
+                <Segment>
+                    <h2>Entries</h2>
+                    {patient.entries.map(entry =>
+                    <div key={entry.date}> 
+                        <p>{entry.date} <em>{entry.description}</em></p>
+                        <ul>
+                            {entry.diagnosisCodes?.map(code => 
+                                <li key={code}>{code}</li>    
+                            )}
+                        </ul>
+                    </div>
+                    )}
+                </Segment>
+                </>
             )}
         </>
     );
