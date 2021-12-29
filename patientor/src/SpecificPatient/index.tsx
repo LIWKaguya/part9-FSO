@@ -8,7 +8,7 @@ import { Patient, Gender } from "../types";
 
 const SpecificPatient = () => {
     const {id} = useParams<{id : string}>();
-    const [{patients}, dispatch] = useStateValue();
+    const [{patients, diagnoses}, dispatch] = useStateValue();
     const [patient, setPatient] = useState<Patient>();
 
     useEffect(() => {
@@ -39,7 +39,6 @@ const SpecificPatient = () => {
                 return "genderless";
         }
     };
-
     return (
         <>
             {patient && (
@@ -63,7 +62,9 @@ const SpecificPatient = () => {
                         <p>{entry.date} <em>{entry.description}</em></p>
                         <ul>
                             {entry.diagnosisCodes?.map(code => 
-                                <li key={code}>{code}</li>    
+                                <li key={code}>
+                                    {code}: {diagnoses[code].name}
+                                </li>    
                             )}
                         </ul>
                     </div>
