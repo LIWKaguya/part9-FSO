@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SemanticICONS, Card, Icon, Segment} from "semantic-ui-react";
+import SpecificEntry from "../components/SpecificEntry";
 import { apiBaseUrl } from "../constants";
 import { setSpecificPatient, useStateValue } from "../state";
 import { Patient, Gender } from "../types";
 
 const SpecificPatient = () => {
     const {id} = useParams<{id : string}>();
-    const [{patients, diagnoses}, dispatch] = useStateValue();
+    const [{patients}, dispatch] = useStateValue();
     const [patient, setPatient] = useState<Patient>();
 
     useEffect(() => {
@@ -58,15 +59,11 @@ const SpecificPatient = () => {
                 <Segment>
                     <h2>Entries</h2>
                     {patient.entries.map(entry =>
-                    <div key={entry.date}> 
-                        <p>{entry.date} <em>{entry.description}</em></p>
-                        <ul>
-                            {entry.diagnosisCodes?.map(code => 
-                                <li key={code}>
-                                    {code}: {diagnoses[code].name}
-                                </li>    
-                            )}
-                        </ul>
+                    <div key={entry.id} style={{
+                        margin: "10px",
+                        border: "2px"
+                    }}> 
+                        <SpecificEntry entry={entry} />
                     </div>
                     )}
                 </Segment>
