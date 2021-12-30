@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
 export interface DiagnoseEntry {
     code: string,
     name: string,
@@ -11,7 +10,9 @@ interface BaseEntry {
     date: string;
     specialist: string;
     diagnosisCodes?: Array<DiagnoseEntry["code"]>;
-  }
+}
+
+export type NonIdBaseEntry = Omit<BaseEntry, 'id'>;
   
   export enum HealthCheckRating {
     "Healthy" = 0,
@@ -46,6 +47,15 @@ export type Entry =
     | HospitalEntry
     | OccupationalHealthcareEntry
     | HealthCheckEntry;
+
+type NewHealthCheckEntry = Omit<HealthCheckEntry, 'id'>;
+
+type NewHospitalEntry = Omit<HospitalEntry, 'id'>;
+
+type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, 'id'>;
+
+export type NewEntry = | NewHealthCheckEntry | NewHospitalEntry | NewOccupationalHealthcareEntry;
+
 
 export type PublicPatient = Omit<PatientEntry, 'ssn' | 'entries' >;
 

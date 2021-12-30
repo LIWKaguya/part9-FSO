@@ -3,7 +3,7 @@
 
 import patientsEntries from "../data/patientsEntries";
 import patientData from '../data/patientsEntries';
-import { newPatientEntry, PatientEntry, PublicPatient } from "../types";
+import { newPatientEntry, PatientEntry, PublicPatient, Entry, NewEntry } from "../types";
 import {v1 as uuid} from 'uuid';
 
 const patients: Array<PatientEntry> = patientData;
@@ -37,8 +37,20 @@ const findById = (id: string): PatientEntry | undefined => {
     return entry;
 };
 
+const getPatientEntries = (id: string): Entry[] | undefined => {
+    return patients.find(p => p.id === id)?.entries;
+};
+
+const addPatientWithEntries = (newEntry: NewEntry, id: string): Entry => {
+    const entryWithId: Entry = {...newEntry, id: uuid()};
+    patients.find(p => p.id === id)?.entries.push(entryWithId);
+    return entryWithId;
+};
+
 export default {
     getPublicEntries,
     addPatient,
-    findById
+    findById,
+    getPatientEntries,
+    addPatientWithEntries
 };
