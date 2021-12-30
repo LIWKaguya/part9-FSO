@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SemanticICONS, Card, Icon, Segment} from "semantic-ui-react";
-import { EntryFormValues } from "../AddPatientModal/AddEntryForm";
+import { EntryFormValues } from "../AddEntryModal/AddEntryForm";
 import SpecificEntry from "../components/SpecificEntry";
 import { apiBaseUrl } from "../constants";
 import { addEntry, setSpecificPatient, useStateValue } from "../state";

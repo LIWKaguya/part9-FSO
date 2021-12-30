@@ -8,7 +8,7 @@ import {
   TextField,
   SelectField,
   DiagnosisSelection,
-} from "./FormField";
+} from "../AddPatientModal/FormField";
 import {
   HealthCheckRating,
   EntryType,
