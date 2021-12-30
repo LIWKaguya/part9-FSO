@@ -64,3 +64,20 @@ export type Entry =
   | HospitalEntry
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
+
+type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, "id">;
+type NewHealthCheckEntry = Omit<HealthCheckEntry, "id">;
+type NewHospitalEntry = Omit<HospitalEntry, "id">;
+
+
+
+export type NewEntry =
+  | NewHospitalEntry
+  | NewOccupationalHealthcareEntry
+  | NewHealthCheckEntry;
+
+export enum EntryType {
+  "HealthCheck" = "HealthCheck",
+  "Hospital" = "Hospital",
+  "OccupationalHealthcare" = "OccupationalHealthcare",
+}

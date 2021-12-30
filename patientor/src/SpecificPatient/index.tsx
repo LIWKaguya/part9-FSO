@@ -2,15 +2,30 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SemanticICONS, Card, Icon, Segment} from "semantic-ui-react";
+import { EntryFormValues } from "../AddPatientModal/AddEntryForm";
 import SpecificEntry from "../components/SpecificEntry";
 import { apiBaseUrl } from "../constants";
-import { setSpecificPatient, useStateValue } from "../state";
-import { Patient, Gender } from "../types";
+import { addEntry, setSpecificPatient, useStateValue } from "../state";
+import { Patient, Gender, Entry } from "../types";
 
 const SpecificPatient = () => {
     const {id} = useParams<{id : string}>();
     const [{patients}, dispatch] = useStateValue();
     const [patient, setPatient] = useState<Patient>();
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+    const submitEntry = async (values: EntryFormValues) => {
+        const {data: newEntry} = await axios.post<Entry>(
+            `${apiBaseUrl}/patients/${id}/entries`,
+            values
+        ); 
+        dispatch(addEntry(newEntry, id));
+        closeModal();
+    }
 
     useEffect(() => {
         const fetchedPatient = async () => {
@@ -67,6 +82,7 @@ const SpecificPatient = () => {
                     </div>
                     )}
                 </Segment>
+                <AddEntryModal />
                 </>
             )}
         </>

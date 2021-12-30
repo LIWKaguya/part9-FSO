@@ -1,8 +1,8 @@
-POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries
 Content-Type: application/json
 
 {
-    "date": "2019-08-05",
+    "date": "2021-12-30",
     "type": "OccupationalHealthcare",
     "specialist": "MD House",
     "employerName": "HyPD",

@@ -9,7 +9,7 @@ interface EntryProps {
   error?: string;
 }
 
-const AddPatientModal = ({
+const AddEntryModal = ({
   modalOpen,
   onClose,
   onSubmit,
@@ -24,4 +24,4 @@ const AddPatientModal = ({
   </Modal>
 );
 
-export default AddPatientModal;
+export default AddEntryModal;
